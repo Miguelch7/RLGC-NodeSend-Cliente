@@ -10,7 +10,9 @@ import {
     SUBIR_ARCHIVO_ERROR,
     CREAR_ENLACE_EXITO,
     CREAR_ENLACE_ERROR,
-    LIMPIAR_STATE
+    LIMPIAR_STATE,
+    AGREGAR_PASSWORD,
+    AGREGAR_DESCARGAS
 } from '../../types';
 
 import clienteAxios from '../../config/axios';
@@ -92,10 +94,27 @@ const AppState = ({ children }) => {
         }
     }
 
+    // Limpia el state
     const limpiarState = () => {
         dispatch({
             type: LIMPIAR_STATE
         })
+    }
+
+    // Agrega el password
+    const agregarPassword = password => {
+        dispatch({
+            type: AGREGAR_PASSWORD,
+            payload: password
+        });
+    }
+
+    // Agrega el numero de descargas
+    const agregarDescargas = descargas => {
+        dispatch({
+            type: AGREGAR_DESCARGAS,
+            payload: descargas
+        });
     }
 
     return (
@@ -112,7 +131,9 @@ const AppState = ({ children }) => {
                 mostrarAlerta,
                 subirArchivo,
                 crearEnlace,
-                limpiarState
+                limpiarState,
+                agregarPassword,
+                agregarDescargas
             }}
         >
             { children }

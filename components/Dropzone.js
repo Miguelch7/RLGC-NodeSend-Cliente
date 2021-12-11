@@ -2,11 +2,18 @@ import React, { useCallback, useContext } from 'react';
 import { useDropzone } from "react-dropzone";
 import clienteAxios from '../config/axios';
 import AppContext from '../context/app/appContext';
+import AuthContext from '../context/auth/authContext';
+import Formulario from './Formulario';
 
 const Dropzone = () => {
 
+    // Context de la app
     const appContext = useContext(AppContext);
     const { cargando, mostrarAlerta, subirArchivo, crearEnlace } = appContext;
+
+    // Context de autenticación
+    const authContext = useContext(AuthContext);
+    const { autenticado } = authContext;
 
     const onDropAccepted = useCallback( async acceptedFiles => {
         // Crear un form-data
@@ -21,7 +28,7 @@ const Dropzone = () => {
     }
 
     // Extraer contenido de Dropzone
-    const { getRootProps, getInputProps, isDragActive, acceptedFiles } = useDropzone({ onDropAccepted, onDropRejected, maxSize: 1000000 });
+    const { getRootProps, getInputProps, isDragActive, acceptedFiles } = useDropzone({ onDropAccepted, onDropRejected, maxSize: (autenticado ? 10000000 : 1000000) });
 
     const archivos = acceptedFiles.map(archivo => (
         <li key={ archivo.lastModified } className="bg-white flex-1 p-3 mb-4 shadow-lg rounded">
@@ -38,6 +45,12 @@ const Dropzone = () => {
                     <ul>
                         { archivos }
                     </ul>
+
+                    { autenticado ? (
+                        <Formulario />
+                    ) : (
+                        null
+                    )}
 
                     { cargando ? (
                         <p className="my-10 text-center text-gray-600">Subiendo Archivo...</p>
