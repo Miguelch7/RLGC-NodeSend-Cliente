@@ -1,22 +1,37 @@
 import React, { useContext, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import AuthContext from '../context/auth/authContext';
+import AppContext from '../context/app/appContext';
 
 const Header = () => {
+
+    // Routing
+    const router = useRouter();
 
     // Acceder al context
     const authContext = useContext(AuthContext);
     const { usuario, usuarioAutenticado, cerrarSesion } = authContext;
 
+    // Acceder al context de la app
+    const appContext = useContext(AppContext);
+    const { limpiarState } = appContext;
+
     useEffect(() => {
         usuarioAutenticado();
     }, []);
 
+    const volverAlIndex = () => {
+        limpiarState();
+        router.push('/');
+    }
+
     return (
         <header className="py-8 flex flex-col md:flex-row items-center justify-between">
-            <Link href="/">
-                <img className="w-64 mb-8 md:mb-0" src="logo.svg" />
-            </Link>
+            <img
+                onClick={ () => volverAlIndex() } 
+                className="w-64 mb-8 md:mb-0 cursor-pointer" src="/logo.svg" 
+            />
 
             <div>
                 { usuario ? (

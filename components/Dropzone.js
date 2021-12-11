@@ -33,7 +33,7 @@ const Dropzone = () => {
     return (
         <div className="md:flex-1 mb-3 mx-2 mt-16 lg:mt-0 flex flex-col items-center justify-center border-dashed border-gray-400 border-2 bg-gray-100">
             { acceptedFiles.length > 0 ? (
-                <div className="mt-10 w-full">
+                <div className="mt-10 w-full px-4">
                     <h4 className="text-2xl font-bold text-center mb-4">Archivos</h4>
                     <ul>
                         { archivos }
@@ -51,7 +51,7 @@ const Dropzone = () => {
 
                 </div>
             ) : (
-                <div { ...getRootProps({ className: 'dropzone w-full py-32' }) }>
+                <div { ...getRootProps({ className: 'dropzone w-full py-32 px-4' }) }>
                     <input className="h-100" { ...getInputProps() } />
 
                     { isDragActive ? <p className="text-2xl text-center text-gray-600">Suelta el archivo</p> : (
